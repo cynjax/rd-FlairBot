@@ -1,0 +1,235 @@
+
+<html>
+<head>
+
+<script>
+typename = ["normal","bug","dark","dragon","electric","fairy","fighting","fire","flying","ghost","grass","ground","ice","poison","psychic","rock","steel","water"]
+pokecheck = [["aipom dunsparce teddiursa lillipup ","loudred kecleon audino minccino ","chansey ditto eevee smeargle "],["butterfree paras ledyba combee ","beautifly masquerain volbeat illumise ","venomoth pinsir heracross vivillon "],["mightyena nuzleaf pawniard vullaby ","sneasel cacturne crawdaunt sandile ","sableye absol liepard inkay "],["gabite fraxure ","dragonair shelgon noibat ","druddigon sliggoo "],["electrode pachirisu emolga dedenne ","pikachu electabuzz stunfisk helioptile ","manectric luxio zebstrika galvantula "],["togepi snubbull kirlia dedenne ","jigglypuff mawile spritzee swirlix ","clefairy floette "],["mankey machoke meditite mienfoo ","throh sawk pancham ","tyrogue breloom hariyama riolu "],["growlithe ponyta magmar pansear ","charmeleon slugma larvesta pyroar ","ninetales braixen fletchinder "],["pidgey spearow farfetchd doduo ","hoothoot tranquill woobat swanna ","tropius rufflet fletchinder hawlucha "],["shuppet lampent ","phantump pumpkaboo ","dusclops drifblim spiritomb golurk "],["oddish tangela sunkern pansage ","ivysaur swadloon petilil sawsbuck ","maractus quilladin gogoat "],["sandshrew wooper phanpy trapinch ","dugtrio marowak nincada camerupt ","gastrodon palpitoad diggersby "],["delibird snorunt spheal snover ","sneasel beartic bergmite ","dewgong cloyster lapras piloswine "],["kakuna gloom cascoon seviper ","venomoth ariados swalot garbodor ","muk drapion toxicroak whirlipede "],["abra drowzee grumpig munna ","wobbuffet sigilyph espurr ","xatu girafarig gothorita duosion "],["nosepass boldore dwebble ","onix magcargo corsola pupitar ","rhydon shuckle barbaracle "],["magneton mawile ferroseed ","forretress skarmory metang klang ","bronzong excadrill klefki "],["krabby octillery bibarel panpour ","wartortle gyarados quagsire floatzel ","poliwhirl lapras azumarill frogadier "]]
+</script>
+<style type="text/css">
+body{
+	text-align: center;
+	background: #f8f8f8;
+}
+form{
+	width:458px;
+	display: inline-block;
+	margin-top: 100px;
+}
+
+select{
+	width: 150px;
+}
+
+#type, #user, #fc{
+	width: 100%;
+	margin-left: 0px;
+}
+
+#slot1, #slot2, #slot3{
+	display: inline-block;
+	margin: 5px 0px;
+}
+
+#button{
+	background: #3498db;
+	color: white;
+	padding: 3px 0;
+	text-align: center;
+	width: 100%px;
+	cursor: pointer;
+	border: 1px solid #2980b9;
+	text-shadow: 1px 1px #2980b9;
+	font-size: 14px;
+}
+
+.header {
+    font-family: Georgia, serif;
+    font-size: 18px;
+}
+
+a, .header {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.post {
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Arial,sans-serif;
+    font-size: 14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<form>
+<input type="text" id="user" value="Name">
+<input type="text" id="fc" value="0000-0000-0000">
+<script type="text/javascript">
+document.write('<select onchange="set_pokes()" size="1" id="type">');
+for (i = -1; i < typename.length; i++){
+	if (i<0){
+		document.write('<option selected="selected" value ="'+i+'">I don\'t know what\'s in my safari.</option>');
+	}
+	else{
+		document.write('<option value ="'+i+'">'+typename[i].slice(0,1).toUpperCase()+typename[i].slice(1)+'</option>');
+	}
+}
+document.write('</select>')
+</script>
+<br/>
+<div id="slot1"></div>
+<div id="slot2"></div>
+<div id="slot3"></div>
+<div id="button" onclick="safari_send()">GENERATE FLAIR REQUEST</div>
+<p>
+<!--<div id="button" onclick="unknown_send()">I don't know what pokemon I have!</div>-->
+</form>
+
+<script>
+function check_fc(fc){
+	vnums = "0123456789"
+	valid = [vnums,vnums,vnums,vnums,"-",vnums,vnums,vnums,vnums,"-",vnums,vnums,vnums,vnums]
+	if ((fc).length != 14) return false;
+	for (i=0;i<14;i++) if (valid[i].indexOf(fc[i]) == -1) return false;
+	return true;
+}
+
+function unknown_send(){
+	name = document.getElementById("user").value;
+	fc 	 = document.getElementById("fc").value.replace(/ /g,'');
+	console.log('fc='+fc+'"')
+
+	if(check_fc(fc)) {
+		if(fc == "0000-0000-0000"){
+			alert("You didn't enter your Friend Code, please insert it before submitting your request.");
+		}
+		else{
+		alert("DO NOT EDIT THE UPCOMING MESSAGE, JUST CLICK SEND!!!");
+		window.location="http://www.reddit.com/message/compose/?to=FriendSafariBot&subject="+name+":+"+fc+"&message=unknown";
+		}
+	}
+	else alert("Friend Code Invalid\nYour friend code should be in the form of 0000-0000-0000\nPlease insert a valid Friend Code");
+}
+
+function safari_send(){
+	name = document.getElementById("user").value;
+	fc 	 = document.getElementById("fc").value;
+
+	type = document.getElementById("type");
+	type = type.options[type.selectedIndex].value;
+
+    if (type < 0) {
+        unknown_send();
+        return;
+    }
+	
+	poke1 = document.getElementById("poke1");
+	poke1 = poke1.options[poke1.selectedIndex].value;
+
+	poke2 = document.getElementById("poke2");
+	poke2 = poke2.options[poke2.selectedIndex].value;
+
+	poke3 = document.getElementById("poke3");
+	poke3 = poke3.options[poke3.selectedIndex].value;
+
+	if (poke1==="none" || poke2==="none") {
+		alert("When entering a type, you must enter the first two Pokemon in your safari as well.\n\nIf you do not the first two Pokemon in your safari, please select \"I don't know what's in my safari.\" instead.");
+		return;
+	}
+	
+	poke1 = pokecheck[type][0].split(" ")[poke1];
+	poke2 = pokecheck[type][1].split(" ")[poke2];
+	
+	msg = poke1 + "+" + poke2
+	if (poke3!="none")
+		msg += "+" + pokecheck[type][2].split(" ")[poke3];
+	
+	if(check_fc(fc)) {
+		if(fc == "0000-0000-0000"){
+			alert("You didn't enter your Friend Code, please insert it before submitting your request.")
+		}
+		else{
+		alert("DO NOT EDIT THE UPCOMING MESSAGE, JUST CLICK SEND!!!");
+		window.location="http://www.reddit.com/message/compose/?to=FriendSafariBot&subject="+name+":+"+fc+"&message="+msg;
+		}
+	}
+	else alert("Friend Code Invalid\nYour friend code should be in the form of 0000-0000-0000\nPlease insert a valid Friend Code")
+}
+function set_pokes(){
+	type = document.getElementById("type");
+	type = type.options[type.selectedIndex].value;
+	
+	if (type < 0) {
+	    document.getElementById("slot1").innerHTML = "";
+	    document.getElementById("slot2").innerHTML = "";
+	    document.getElementById("slot3").innerHTML = "";
+	    return;
+	}
+	
+	oSlot1  = '<select size="1" id="poke1">';
+	pokes = pokecheck[type][0].split(" ");
+	for (i = -1; i < pokes.length-1; i++){
+		if (i==-1){
+			oSlot1 +=('<option selected="selected" value ="none">???</option>');
+		}
+		else{
+			oSlot1 +=('<option value ="'+i+'">'+pokes[i].slice(0,1).toUpperCase()+pokes[i].slice(1)+'</option>');
+		}
+	}
+	oSlot1 += '</select>';
+
+	oSlot2  = '<select size="1" id="poke2">';
+	pokes = pokecheck[type][1].split(" ");
+	for (i = -1; i < pokes.length-1; i++){
+		if (i==-1){
+			oSlot2 +=('<option selected="selected" value ="none">???</option>');
+		}
+		else{
+			oSlot2 +=('<option value ="'+i+'">'+pokes[i].slice(0,1).toUpperCase()+pokes[i].slice(1)+'</option>');
+		}
+	}
+	oSlot2 += '</select>';
+
+	oSlot3  = '<select size="1" id="poke3">';
+	pokes = pokecheck[type][2].split(" ");
+	for (i = -1; i < pokes.length-1; i++){
+		if (i==-1){
+			oSlot3 +=('<option selected="selected" value ="none">???</option>');
+		}
+		else{
+			oSlot3 +=('<option value ="'+i+'">'+pokes[i].slice(0,1).toUpperCase()+pokes[i].slice(1)+'</option>');
+		}
+	}
+	oSlot3 += '</select>';
+	
+	document.getElementById("slot1").innerHTML = oSlot1;
+	document.getElementById("slot2").innerHTML = oSlot2;
+	document.getElementById("slot3").innerHTML = oSlot3;
+}
+
+set_pokes();
+</script>
+
+            
+                <div class="post">
+                    
+                        <div class="regular">
+                            
+                                <div class="header">Instructions</div>
+                            
+                            <p>Please enter your Mii name, friend code, and safari Pok&eacute;mon (if you know them) in the boxes above. Then click on "Generate Flair Request" and a message to send to FriendSafariBot will be automatically be generated. Do not alter this message in any way! If something looks wrong, hit the back button, fix it here, and then try again. <strong>Once submitted, flair will usually be set within 15 minutes. You&rsquo;ll receive a message from the bot and your flair will be displayed on the right sidebar of /r/friendsafari when it&rsquo;s done.</strong></p>
+<p><strong>Important information for newcomers:</strong> Unless someone else had already told you what your safari Pok&eacute;mon are on a different site, leave the last field on the default &ldquo;I don&rsquo;t know what&rsquo;s in my safari.&rdquo; option. Then once someone else has told you what your Friend Safari Pok&eacute;mon are, come back to this page and make another flair request with the Pok&eacute;mon section filled out. Be sure to read the <a href="https://www.reddit.com/r/friendsafari/wiki/gettingstarted">Getting Started</a> guide as well!</p>
+<p><strong>WARNING: Providing false information will lead to a ban from /r/friendsafari!<br></strong></p>
+                        </div>
+                    
+                </div>
+            
+
+</body>
+</html>
